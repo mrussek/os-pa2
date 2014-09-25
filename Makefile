@@ -6,6 +6,9 @@ LFLAGS = -Wall -Wextra -pthread
 
 all: lookup queueTest pthread-hello
 
+multi-lookup: multi-lookup.o queue.o util.o
+	$(CC) $(LFLAGS) $^ -o $@
+
 lookup: lookup.o queue.o util.o
 	$(CC) $(LFLAGS) $^ -o $@
 
@@ -14,6 +17,9 @@ queueTest: queueTest.o queue.o
 
 pthread-hello: pthread-hello.o
 	$(CC) $(LFLAGS) $^ -o $@
+
+multi-lookup.o: multi-lookup.c
+	$(CC) $(CFLAGS) $<
 
 lookup.o: lookup.c
 	$(CC) $(CFLAGS) $<
@@ -31,7 +37,7 @@ pthread-hello.o: pthread-hello.c
 	$(CC) $(CFLAGS) $<
 
 clean:
-	rm -f lookup queueTest pthread-hello
+	rm -f multi-lookup lookup queueTest pthread-hello
 	rm -f *.o
 	rm -f *~
 	rm -f results.txt
