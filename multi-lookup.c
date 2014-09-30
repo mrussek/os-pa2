@@ -68,8 +68,41 @@ void *consumer(void *argument) {
 
 int main (int argc, char *argv[])
 {
-	
-	
+	pthread_t *requesters, *resolvers;
+	FILE *output;
+	int i;
+
+	if (argc < 3) {
+		fprintf(stderr, "Not enough enough arguments\n");
+		return 1;
+	}
+
+	output = fopen((char*)argv[argc - 1], "w");
+	requesters = malloc(sizeof(pthread_t) * argc - 2);
+	resolvers = malloc(sizeof(pthread_t) * NUM_RESOLVERS);
+
+	if (queue_init(&address_queue, QUEUE_SIZE) == QUEUE_FAILURE) {
+		fprintf(stderr, "Could not create queue\n");
+		return 1;
+	}
+
+	for (i = 1; i < (argc - 1); i++) {
+		pthread_create(&requesters[i - 1], NULL, producer, argv[i]);
+	}
+
+	for (i = 0; i < NUM_RESOLVERS; i++) {
+		pthread_create(&resolvers[i], NULL, consumer, output);
+	}
+
+	for (i = 0; i < (argc - 2); i++) {
+		pthread_join(requesters[i], NULL);
+	}
+
+	for (i = 0; i < NUM_RESOLVERS; i++) {
+		pthread_join(resolvers[i], NULL);
+	}
+
+	fclose(output);
 	
 	return 0;
 }
