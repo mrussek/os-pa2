@@ -15,6 +15,8 @@
  * 
  * */
 
+const int NUM_RESOLVERS = 2;
+const int QUEUE_SIZE = 10;
 
 int main (int argc, char *argv[])
 {
