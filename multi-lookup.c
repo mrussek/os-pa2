@@ -1,6 +1,8 @@
 #include "queue.h"
 #include "util.h"
 #include <stdlib.h>
+#include <pthread.h>
+#include <stdio.h>
 
 /*
  * CSCI 3753
