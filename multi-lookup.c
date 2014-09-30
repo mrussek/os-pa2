@@ -38,7 +38,7 @@ void *producer(void *argument) {
 		if (!queue_is_full(&address_queue)) {
 			ret = queue_push(&address_queue, line);
 			if (ret == QUEUE_FAILURE) {
-				fprintf(stderr, "Couldn't push for queue");
+				fprintf(stderr, "Couldn't push for queue\n");
 			}
 		}
 		line = NULL;
