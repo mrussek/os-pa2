@@ -15,6 +15,9 @@
  * 
  * */
 
+/* Global queue for hostnames */
+queue address_queue;
+
 const int NUM_RESOLVERS = 2;
 const int QUEUE_SIZE = 10;
 
