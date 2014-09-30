@@ -41,7 +41,6 @@ void *producer(void *argument) {
 				fprintf(stderr, "Couldn't push for queue");
 			}
 		}
-		free(line);
 		line = NULL;
 	}
 	fclose(input);
@@ -62,6 +61,7 @@ void *consumer(void *argument) {
 				fprintf(stderr, "DNS lookup failed");
 			fprintf(output, "%s,%s\n", hostname, ip);
 		}
+		free(hostname);
 	}
 	pthread_exit(NULL);
 }
